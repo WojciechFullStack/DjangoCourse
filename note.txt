@@ -1,0 +1,57 @@
+<!-- Przykład pliku regression.html -->
+{% extends 'main/base.html' %}
+{% block title %}Some page{% endblock %}
+{% block content %}
+    <h1>About me</h1>
+    <p>Some info about me</p>
+{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My AI Tools{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer>
+        <p>Short footer text</p>
+    </footer>
+</body>
+</html>
+
+
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'main/index.html')
+
+
+def about(request):
+    return render(request, 'main/about.html')
+
+
+
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('about/', views.about, name='about'),
+]
+
+
+path('', include('main.urls')),
